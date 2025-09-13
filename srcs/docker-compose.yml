@@ -54,7 +54,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "--header", "Host: sprodatu.42.fr", "http://localhost:9000/ping"]
+      test: ["CMD", "pgrep", "php-fpm8"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -67,7 +67,7 @@ services:
       dockerfile: Dockerfile
     env_file: .env
     ports:
-      - "443:443"
+      - "8443:443"
     volumes:
       - wordpress_data:/var/www/html:ro
     networks:
