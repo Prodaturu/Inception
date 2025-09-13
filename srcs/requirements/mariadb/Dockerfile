@@ -6,9 +6,9 @@ RUN apk update && apk add --no-cache \
     mariadb-client \
     && rm -rf /var/cache/apk/*
 
-# Create mysql user and group
-RUN addgroup -g 999 mysql && \
-    adduser -D -u 999 -G mysql -s /bin/sh mysql
+# Create mysql user and group if they don't exist
+RUN addgroup -g 999 mysql || true && \
+    adduser -D -u 999 -G mysql -s /bin/sh mysql || true
 
 # Create necessary directories
 RUN mkdir -p /var/lib/mysql /run/mysqld && \

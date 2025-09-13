@@ -4,11 +4,8 @@ FROM alpine:3.16
 RUN apk update && apk add --no-cache \
     nginx \
     openssl \
+    wget \
     && rm -rf /var/cache/apk/*
-
-# Create nginx user if it doesn't exist
-RUN addgroup -g 101 -S nginx && \
-    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
 
 # Create necessary directories
 RUN mkdir -p /var/cache/nginx /var/log/nginx /etc/nginx/ssl

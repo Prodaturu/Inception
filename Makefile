@@ -50,37 +50,37 @@ volumes:
 
 build:
 	@echo "$(GREEN)Building Docker images...$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) build --no-cache
+	@docker compose -f $(COMPOSE_FILE) build --no-cache
 	@echo "$(GREEN)Docker images built successfully$(NC)"
 
 up: volumes
 	@echo "$(GREEN)Starting Inception services...$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) up -d --build
+	@docker compose -f $(COMPOSE_FILE) up -d --build
 	@echo "$(GREEN)Services started successfully$(NC)"
 	@echo "$(YELLOW)Website available at: https://sprodatu.42.fr$(NC)"
 	@echo "$(YELLOW)Add '127.0.0.1 sprodatu.42.fr' to /etc/hosts if needed$(NC)"
 
 down:
 	@echo "$(RED)Stopping all services...$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) down
+	@docker compose -f $(COMPOSE_FILE) down
 	@echo "$(RED)Services stopped$(NC)"
 
 stop:
 	@echo "$(YELLOW)Stopping containers...$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) stop
+	@docker compose -f $(COMPOSE_FILE) stop
 	@echo "$(YELLOW)Containers stopped$(NC)"
 
 restart:
 	@echo "$(YELLOW)Restarting services...$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) restart
+	@docker compose -f $(COMPOSE_FILE) restart
 	@echo "$(GREEN)Services restarted$(NC)"
 
 logs:
-	@docker-compose -f $(COMPOSE_FILE) logs -f
+	@docker compose -f $(COMPOSE_FILE) logs -f
 
 status:
 	@echo "$(GREEN)Container Status:$(NC)"
-	@docker-compose -f $(COMPOSE_FILE) ps
+	@docker compose -f $(COMPOSE_FILE) ps
 	@echo ""
 	@echo "$(GREEN)Network Status:$(NC)"
 	@docker network ls | grep inception || echo "No inception network found"
