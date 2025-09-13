@@ -57,8 +57,9 @@ up: volumes
 	@echo "$(GREEN)Starting Inception services...$(NC)"
 	@docker compose -f $(COMPOSE_FILE) up -d --build
 	@echo "$(GREEN)Services started successfully$(NC)"
-	@echo "$(YELLOW)Website available at: https://sprodatu.42.fr$(NC)"
+	@echo "$(YELLOW)Website available at: https://sprodatu.42.fr:8443$(NC)"
 	@echo "$(YELLOW)Add '127.0.0.1 sprodatu.42.fr' to /etc/hosts if needed$(NC)"
+	@echo "$(YELLOW)Note: Using port 8443 due to rootless Docker limitations$(NC)"
 
 down:
 	@echo "$(RED)Stopping all services...$(NC)"
