@@ -1,0 +1,28 @@
+# Secrets directory - NEVER commit passwords
+secrets/
+
+# Data directories
+/home/*/data/
+data/
+
+# Docker volumes
+*.log
+
+# Backup files
+backups/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
