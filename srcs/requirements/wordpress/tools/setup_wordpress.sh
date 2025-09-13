@@ -55,8 +55,8 @@ else
     echo "WordPress already installed."
 fi
 
-# Ensure proper permissions
-chown -R www-data:www-data /var/www/html
+# Ensure proper permissions (only for directories and existing files)
+chown -R www-data:www-data /var/www/html 2>/dev/null || true
 
 echo "Starting PHP-FPM..."
 exec "$@"
