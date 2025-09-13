@@ -25,7 +25,7 @@ if ! mysql -e "USE ${MYSQL_DATABASE};" 2>/dev/null; then
     echo "Setting up database and users..."
     
     # Secure installation and create database
-    mysql << EOF
+    mysql << SQLEOF
 -- Set root password
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 
@@ -48,3 +48,17 @@ GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
 
 -- Flush privileges
 FLUSH PRIVILEGES;
+SQLEOF
+    
+    echo "Database setup completed."
+else
+    echo "Database already exists, skipping setup."
+fi
+
+# Stop background MariaDB
+kill $MYSQL_PID
+wait $MYSQL_PID
+
+echo "Starting MariaDB..."
+# Start MariaDB in foreground
+exec "$@"

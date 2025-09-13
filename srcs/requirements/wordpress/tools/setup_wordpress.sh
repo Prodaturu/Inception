@@ -7,8 +7,9 @@ DB_PASSWORD=$(cat /run/secrets/db_password)
 
 # Wait for MariaDB to be ready
 echo "Waiting for MariaDB to be ready..."
-while ! wget -q --spider --timeout=1 --tries=1 http://mariadb:3306 2>/dev/null; do
-    sleep 2
+while ! nc -z mariadb 3306; do
+    echo "MariaDB not ready, waiting..."
+    sleep 3
 done
 
 echo "MariaDB is ready. Setting up WordPress..."

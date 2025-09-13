@@ -19,6 +19,7 @@ RUN apk update && apk add --no-cache \
     php8-phar \
     wget \
     curl \
+    netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
 # Create www-data user and group (in case they don't exist)
