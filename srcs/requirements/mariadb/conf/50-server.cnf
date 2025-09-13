@@ -2,6 +2,7 @@
 # Network configuration
 bind-address = 0.0.0.0
 port = 3306
+skip-networking = 0
 
 # General settings
 user = mysql
@@ -30,4 +31,7 @@ read_rnd_buffer_size = 512K
 myisam_sort_buffer_size = 8M
 
 # Security
+# Enable networking and specify port explicitly
+# Skip networking must be 0 or disabled to allow network connections
 skip-networking = 0
+port = 3306

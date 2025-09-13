@@ -1,0 +1,17 @@
+#
+# Override default MariaDB server configuration
+#
+
+# this is only for the mysqld standalone daemon
+[mysqld]
+# Explicitly enable networking
+#skip-networking
+
+# this is only for embedded server
+[embedded]
+
+# This group is only read by MariaDB servers, not by MySQL.
+[mariadb]
+
+# This group is only read by MariaDB-10.5 servers.
+[mariadb-10.5]

@@ -16,6 +16,7 @@ RUN mkdir -p /var/lib/mysql /run/mysqld && \
 
 # Copy configuration file
 COPY conf/50-server.cnf /etc/my.cnf.d/50-server.cnf
+COPY conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 # Copy initialization script
 COPY tools/init_db.sh /usr/local/bin/init_db.sh
