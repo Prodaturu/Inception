@@ -33,9 +33,9 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     # Wait a bit more for database to be fully ready
     sleep 10
     
-    # Install WordPress
+    # Install WordPress with correct URL including port
     wp core install \
-        --url=https://${DOMAIN_NAME} \
+        --url=https://${DOMAIN_NAME}:8443 \
         --title="${WORDPRESS_TITLE}" \
         --admin_user=${WORDPRESS_ADMIN_USER} \
         --admin_password=${WP_ADMIN_PASSWORD} \
@@ -49,6 +49,14 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
         --role=author \
         --user_pass=${WP_USER_PASSWORD} \
         --allow-root
+    
+    # Install and activate Twenty Twenty-Four theme
+    echo "Installing and activating Twenty Twenty-Four theme..."
+    wp theme install twentytwentyfour --activate --allow-root
+    
+    # Install some useful plugins
+    echo "Installing useful plugins..."
+    wp plugin install classic-editor --activate --allow-root
     
     echo "WordPress installation completed."
 else

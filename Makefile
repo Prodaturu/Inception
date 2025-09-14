@@ -13,7 +13,7 @@
 # Project configuration
 NAME = inception
 COMPOSE_FILE = srcs/docker-compose.yml
-DATA_DIR = /home/sprodatu/data
+DATA_DIR = /home/debian/data
 
 # Colors
 GREEN = \033[0;32m
@@ -50,12 +50,12 @@ volumes:
 
 build:
 	@echo "$(GREEN)Building Docker images...$(NC)"
-	@docker compose -f $(COMPOSE_FILE) build --no-cache
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) build --no-cache
 	@echo "$(GREEN)Docker images built successfully$(NC)"
 
 up: volumes
 	@echo "$(GREEN)Starting Inception services...$(NC)"
-	@docker compose -f $(COMPOSE_FILE) up -d --build
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) up -d --build
 	@echo "$(GREEN)Services started successfully$(NC)"
 	@echo "$(YELLOW)Website available at: https://sprodatu.42.fr:8443$(NC)"
 	@echo "$(YELLOW)Add '127.0.0.1 sprodatu.42.fr' to /etc/hosts if needed$(NC)"
@@ -63,25 +63,25 @@ up: volumes
 
 down:
 	@echo "$(RED)Stopping all services...$(NC)"
-	@docker compose -f $(COMPOSE_FILE) down
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) down
 	@echo "$(RED)Services stopped$(NC)"
 
 stop:
 	@echo "$(YELLOW)Stopping containers...$(NC)"
-	@docker compose -f $(COMPOSE_FILE) stop
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) stop
 	@echo "$(YELLOW)Containers stopped$(NC)"
 
 restart:
 	@echo "$(YELLOW)Restarting services...$(NC)"
-	@docker compose -f $(COMPOSE_FILE) restart
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) restart
 	@echo "$(GREEN)Services restarted$(NC)"
 
 logs:
-	@docker compose -f $(COMPOSE_FILE) logs -f
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) logs -f
 
 status:
 	@echo "$(GREEN)Container Status:$(NC)"
-	@docker compose -f $(COMPOSE_FILE) ps
+	@docker-compose -p $(NAME) -f $(COMPOSE_FILE) ps
 	@echo ""
 	@echo "$(GREEN)Network Status:$(NC)"
 	@docker network ls | grep inception || echo "No inception network found"
@@ -106,13 +106,13 @@ re: fclean up
 
 # Development helpers
 shell-nginx:
-	@docker exec -it nginx /bin/sh
+	@docker exec -it inception_nginx_1 /bin/sh
 
 shell-wordpress:
-	@docker exec -it wordpress /bin/sh
+	@docker exec -it inception_wordpress_1 /bin/sh
 
 shell-mariadb:
-	@docker exec -it mariadb /bin/sh
+	@docker exec -it inception_mariadb_1 /bin/sh
 
 # Backup and restore
 backup:
@@ -124,5 +124,5 @@ backup:
 # SSL certificate info
 ssl-info:
 	@echo "$(GREEN)SSL Certificate Information:$(NC)"
-	@docker exec nginx openssl x509 -in /etc/nginx/ssl/sprodatu.42.fr.crt -text -noout | grep -A2 "Subject:"
-	@docker exec nginx openssl x509 -in /etc/nginx/ssl/sprodatu.42.fr.crt -dates -noout
+	@docker exec inception_nginx_1 openssl x509 -in /etc/nginx/ssl/sprodatu.42.fr.crt -text -noout | grep -A2 "Subject:"
+	@docker exec inception_nginx_1 openssl x509 -in /etc/nginx/ssl/sprodatu.42.fr.crt -dates -noout

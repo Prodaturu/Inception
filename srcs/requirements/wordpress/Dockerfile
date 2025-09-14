@@ -20,6 +20,7 @@ RUN apk update && apk add --no-cache \
     wget \
     curl \
     netcat-openbsd \
+    mariadb-client \
     && rm -rf /var/cache/apk/*
 
 # Create www-data user and group (in case they don't exist)
@@ -37,8 +38,8 @@ COPY conf/php.ini /etc/php8/php.ini
 COPY tools/setup_wordpress.sh /usr/local/bin/setup_wordpress.sh
 RUN chmod +x /usr/local/bin/setup_wordpress.sh
 
-# Install WP-CLI using alternative method
-RUN curl -O https://raw.githubusercontent.com/wp-cli/wp-cli/v2.5.0/phar/wp-cli.phar && \
+# Install WP-CLI using official release
+RUN wget https://github.com/wp-cli/wp-cli/releases/download/v2.8.1/wp-cli-2.8.1.phar -O wp-cli.phar && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
